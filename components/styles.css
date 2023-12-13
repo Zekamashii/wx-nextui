@@ -1,0 +1,9 @@
+.input-container {
+  display: flex;
+  align-items: center; /* This will vertically align the items in the middle */
+}
+
+input,
+button {
+  margin: 5px; /* Add margin for spacing */
+}
