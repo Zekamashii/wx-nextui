@@ -24,6 +24,7 @@
     "@react-aria/visually-hidden": "^3.8.6",
     "@types/node": "20.5.7",
     "@types/react-dom": "18.2.7",
+    "@vercel/analytics": "^1.1.1",
     "@vercel/speed-insights": "^1.0.1",
     "autoprefixer": "10.4.16",
     "clsx": "^2.0.0",
