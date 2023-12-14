@@ -6,6 +6,7 @@ import InputBox from "../components/InputBox";
 import * as React from "react";
 import { NextUIProvider } from "@nextui-org/system";
 import { Divider } from "@nextui-org/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <Header />
         <Divider className='my-4' />
         <InputBox />
+        <SpeedInsights/>
       </div>
     </NextUIProvider>
   );
