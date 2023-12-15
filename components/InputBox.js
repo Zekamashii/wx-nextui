@@ -3,6 +3,7 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 import { Card, CardFooter } from "@nextui-org/react";
+import { Divider } from "@nextui-org/react";
 import Image from "next/image";
 import "./styles.css";
 import profilePic from "./Howdare.webp";
@@ -58,10 +59,10 @@ export default function InputBox() {
           autoCorrect='off'
           autoComplete='off'
           value={location}
-          label='Search City, IATA Airport Code, or GPS Coordinates.'
+          label='Search City, ICAO Airport Code, or GPS Coordinates.'
           variant='bordered'
           placeholder='Sapporo'
-          className='w-full'
+          className='w-full min-w-500px'
           onClear={clearInput}
           onChange={handleChange}
         />
@@ -108,6 +109,7 @@ export default function InputBox() {
               </Button>
             </CardFooter>
           </Card>
+          <Divider className='my-4 max-w-4xl' />
           <WxTable props={data} />
         </>
       )}

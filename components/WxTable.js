@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Divider } from "@nextui-org/react";
+import { useResizeDetector } from "react-resize-detector";
 import dynamic from "next/dynamic";
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -18,10 +18,11 @@ export default function Result({ props }) {
     setFeelLikeData(feelsLike);
   }, [props]);
 
+  const { width, height, ref } = useResizeDetector({});
+
   return (
     props && (
-      <div className='flex flex-col items-center justify-center'>
-        <Divider className='my-4' />
+      <>
         <Plot
           data={[
             {
@@ -40,8 +41,8 @@ export default function Result({ props }) {
             },
           ]}
           layout={{
-            width: 1000,
-            height: 500,
+            width: width,
+            height: height,
             title: "Hourly Temperature Forecast",
             xaxis: {
               title: "Hours from Now",
@@ -50,9 +51,9 @@ export default function Result({ props }) {
               title: "Temperature (°C)",
             },
           }}
-          className='w-full h-full items-center justify-center'
+          className='items-center justify-center'
         />
-      </div>
+      </>
     )
   );
 }
