@@ -14,8 +14,6 @@ export default function Result({ props }) {
     setYData(temperatures);
   }, [props]);
 
-  console.log(xData, yData);
-
   return (
     props && (
       <div className='flex flex-col items-center justify-center'>
