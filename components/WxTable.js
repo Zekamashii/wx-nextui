@@ -4,15 +4,18 @@ import dynamic from "next/dynamic";
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
 export default function Result({ props }) {
-  const [xData, setXData] = useState(0);
-  const [yData, setYData] = useState(0);
+  const [timeData, setTimeData] = useState(0);
+  const [tempData, setTempData] = useState(0);
+  const [feelLikeData, setFeelLikeData] = useState(0);
 
   useEffect(() => {
     const times = props?.weather[0].hourly.map((data) => data.time);
     const temperatures = props?.weather[0].hourly.map((data) => data.tempC);
+    const feelsLike = props?.weather[0].hourly.map((data) => data.FeelsLikeC);
 
-    setXData(times);
-    setYData(temperatures);
+    setTimeData(times);
+    setTempData(temperatures);
+    setFeelLikeData(feelsLike);
   }, [props]);
 
   return (
@@ -22,10 +25,18 @@ export default function Result({ props }) {
         <Plot
           data={[
             {
-              x: xData,
-              y: yData,
+              x: timeData,
+              y: tempData,
               type: "scatter",
               marker: { color: "red" },
+              name: "Temperature (°C)",
+            },
+            {
+              x: timeData,
+              y: feelLikeData,
+              type: "scatter",
+              marker: { color: "blue" },
+              name: "Feels like (°C)",
             },
           ]}
           layout={{
@@ -33,7 +44,7 @@ export default function Result({ props }) {
             height: 500,
             title: "Hourly Temperature Forecast",
             xaxis: {
-              title: "Time",
+              title: "Hours from Now",
             },
             yaxis: {
               title: "Temperature (°C)",
