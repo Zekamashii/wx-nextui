@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
+import { Card, CardFooter } from "@nextui-org/react";
+import Image from "next/image";
 import "./styles.css";
+import profilePic from "./Howdare.webp";
+import WxTable from "./WxTable";
 
 export default function InputBox() {
   const [location, setLocation] = useState("");
@@ -20,7 +24,7 @@ export default function InputBox() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const wxdata = await response.json();
-      setData(wxdata.weather);
+      setData(wxdata);
     } catch (error) {
       console.error("Fetching error: ", error);
       setError(error.message);
@@ -54,9 +58,9 @@ export default function InputBox() {
           autoCorrect='off'
           autoComplete='off'
           value={location}
-          label='Search City, Airport Code, or GPS Coordinates.'
+          label='Search City, IATA Airport Code, or GPS Coordinates.'
           variant='bordered'
-          placeholder='HND'
+          placeholder='Sapporo'
           className='w-full'
           onClear={clearInput}
           onChange={handleChange}
@@ -70,29 +74,42 @@ export default function InputBox() {
       <br />
       {error && <p>Error: {error}</p>}
       {data && !error && (
-        <Table
-          aria-label='Weather forecast table'
-          className='w-1/3'
-          css={{
-            height: "auto",
-            minWidth: "100%",
-          }}
-        >
-          <TableHeader>
-            <TableColumn>{"Date"}</TableColumn>
-            <TableColumn>{"Avg Temp (°C)"}</TableColumn>
-            <TableColumn>{"Avg Temp (°F)"}</TableColumn>
-          </TableHeader>
-          <TableBody>
-            {data?.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item?.date}</TableCell>
-                <TableCell>{item?.avgtempC}</TableCell>
-                <TableCell>{item?.avgtempF}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <>
+          <Table
+            aria-label='Weather forecast table'
+            className='w-1/3'
+            css={{
+              height: "auto",
+              minWidth: "100%",
+            }}
+          >
+            <TableHeader>
+              <TableColumn>{"Date"}</TableColumn>
+              <TableColumn>{"Avg Temp (°C)"}</TableColumn>
+              <TableColumn>{"Avg Temp (°F)"}</TableColumn>
+            </TableHeader>
+            <TableBody>
+              {data.weather?.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item?.date}</TableCell>
+                  <TableCell>{item?.avgtempC}</TableCell>
+                  <TableCell>{item?.avgtempF}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <br />
+          <Card isFooterBlurred radius='lg' className='border-none'>
+            <Image src={profilePic} className='object-cover' height={300} width={300} alt='How dare you!' />
+            <CardFooter className='justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10'>
+              <p className='text-tiny text-white/80 text-left'>Region: {data?.nearest_area[0].region[0].value}</p>
+              <Button className='text-tiny text-white bg-black/20' variant='flat' color='default' radius='lg' size='sm'>
+                Country: {data?.nearest_area[0].country[0].value}
+              </Button>
+            </CardFooter>
+          </Card>
+          <WxTable props={data} />
+        </>
       )}
     </div>
   );
