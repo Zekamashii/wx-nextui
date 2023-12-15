@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Plot from "react-plotly.js";
 import { Divider } from "@nextui-org/react";
+import dynamic from "next/dynamic";
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
 export default function Result({ props }) {
   const [xData, setXData] = useState(0);
