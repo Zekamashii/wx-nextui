@@ -29,14 +29,18 @@ export default function Result({ props }) {
               x: timeData,
               y: tempData,
               type: "scatter",
+              mode: "lines+markers",
               marker: { color: "red" },
+              line: { shape: "spline" },
               name: "Temperature (°C)",
             },
             {
               x: timeData,
               y: feelLikeData,
               type: "scatter",
+              mode: "lines+markers",
               marker: { color: "blue" },
+              line: { shape: "spline" },
               name: "Feels like (°C)",
             },
           ]}
