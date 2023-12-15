@@ -1,1 +1,1 @@
-A demo app for Next.js.
+A demo app for Next.js. Deployed to Vercel.
